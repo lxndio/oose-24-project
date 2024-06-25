@@ -7,7 +7,7 @@ import jakarta.persistence.Table;
 @Table(name = "employee")
 public class Employee extends Person {
     private int staffNr;
-    private boolean isProfessor;
+    private int isProfessor;
 
     public int getStaffNr() {
         return staffNr;
@@ -17,11 +17,11 @@ public class Employee extends Person {
         this.staffNr = staffNr;
     }
 
-    public boolean isProfessor() {
+    public int getIsProfessor() {
         return isProfessor;
     }
 
-    public void setProfessor(boolean professor) {
-        isProfessor = professor;
+    public void setIsProfessor(int isProfessor) {
+        this.isProfessor = isProfessor;
     }
 }

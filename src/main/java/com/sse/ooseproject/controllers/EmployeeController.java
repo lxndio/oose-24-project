@@ -22,8 +22,8 @@ public class EmployeeController {
         this.employeeRepository = employeeRepository;
     }
 
-    @GetMapping("employees")
-    public String employees(Model model, @RequestParam(value = "sort_by", defaultValue = "matNr", required = false) String sort_by,
+    @GetMapping("/employees")
+    public String employees(Model model, @RequestParam(value = "sort_by", defaultValue = "staffNr", required = false) String sort_by,
                             @RequestParam(value = "sort_asc", defaultValue = "true") boolean sort_asc) {
 
         List<Employee> employeesSorted = Collections.emptyList();
@@ -51,8 +51,11 @@ public class EmployeeController {
         if(!sort_asc && Objects.equals(sort_by, "isProfessor")) {
             employeesSorted = employeeRepository.findByOrderByIsProfessorDesc();
         }
-        model.addAllAttributes(employeesSorted);
-        employeeRepository.saveAll(employeesSorted);
+
+        model.addAttribute("employees", employeesSorted);
+        model.addAttribute("sort_asc", sort_asc);
+        model.addAttribute("sort_by", sort_by);
+
         return "employees";
     }
 }
