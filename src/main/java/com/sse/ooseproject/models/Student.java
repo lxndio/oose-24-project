@@ -1,7 +1,7 @@
 package com.sse.ooseproject.models;
 
-import jakarta.persistence.*;
-import jdk.jfr.Name;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "student")

@@ -1,7 +1,7 @@
 package com.sse.ooseproject.controllers;
 
-import com.sse.ooseproject.repositories.StudentRepository;
-import com.sse.ooseproject.models.Student;
+import com.sse.ooseproject.repositories.EmployeeRepository;
+import com.sse.ooseproject.models.Employee;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
@@ -11,26 +11,25 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-public class StudentController {
-
-    private final StudentRepository studentRepository;
+public class EmployeeController {
+    private final EmployeeRepository employeeRepository;
 
     @Autowired
-    public StudentController(StudentRepository studentRepository) {
-        this.studentRepository = studentRepository;
+    public EmployeeController(EmployeeRepository employeeRepository) {
+        this.employeeRepository = employeeRepository;
     }
 
-    @GetMapping("/students")
-    public String students(Model model, @RequestParam(value = "sort_by", defaultValue = "firstName") String sortBy,
+    @GetMapping("/employees")
+    public String employees(Model model, @RequestParam(value = "sort_by", defaultValue = "firstName") String sortBy,
                            @RequestParam(value = "sort_asc", defaultValue = "true") boolean sortAsc) {
 
         Sort.Direction direction = sortAsc ? Sort.Direction.ASC : Sort.Direction.DESC;
         Sort sort = Sort.by(direction, sortBy);
 
-        List<Student> students = studentRepository.findAll(sort);
-        model.addAttribute("students", students);
+        List<Employee> employees = employeeRepository.findAll(sort);
+        model.addAttribute("employees", employees);
 
         // Returning the name of a view (found in resources/templates) as a string lets this endpoint return that view.
-        return "students";
+        return "employees";
     }
 }

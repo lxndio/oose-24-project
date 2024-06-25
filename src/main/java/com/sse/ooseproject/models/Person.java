@@ -1,6 +1,8 @@
 package com.sse.ooseproject.models;
 
-import jakarta.persistence.*;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.GenerationType;
 
 @MappedSuperclass
 public abstract class Person {
