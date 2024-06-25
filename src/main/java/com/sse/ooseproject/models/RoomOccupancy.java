@@ -11,6 +11,8 @@ public class RoomOccupancy {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
+    private LocalDateTime occupancyTime;
+
     @ManyToOne
     @JoinColumn(name = "room_id")
     private Room room;
@@ -19,6 +21,35 @@ public class RoomOccupancy {
     @JoinColumn(name = "course_id")
     private Course course;
 
-    private LocalDateTime occupancyTime;
+    public long getId() {
+        return id;
+    }
 
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public LocalDateTime getOccupancyTime() {
+        return occupancyTime;
+    }
+
+    public void setOccupancyTime(LocalDateTime occupancyTime) {
+        this.occupancyTime = occupancyTime;
+    }
+
+    public Room getRoom() {
+        return room;
+    }
+
+    public void setRoom(Room room) {
+        this.room = room;
+    }
+
+    public Course getCourse() {
+        return course;
+    }
+
+    public void setCourse(Course course) {
+        this.course = course;
+    }
 }

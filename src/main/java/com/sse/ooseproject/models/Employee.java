@@ -42,4 +42,20 @@ public class Employee extends Person{
     public void setProfessor(boolean professor) {
         this.isProfessor = professor;
     }
+
+    public University getUniversity() {
+        return university;
+    }
+
+    public void setUniversity(University university) {
+        this.university = university;
+    }
+
+    public List<TeachingShift> getTeachingShifts() {
+        return teachingShifts;
+    }
+
+    public void setTeachingShifts(List<TeachingShift> teachingShifts) {
+        this.teachingShifts = teachingShifts;
+    }
 }

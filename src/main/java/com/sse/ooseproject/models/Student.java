@@ -42,4 +42,20 @@ public class Student extends Person{
     public void setStudySubject(String studySubject) {
         this.studySubject = studySubject;
     }
+
+    public University getUniversity() {
+        return university;
+    }
+
+    public void setUniversity(University university) {
+        this.university = university;
+    }
+
+    public List<Enrollment> getEnrollments() {
+        return enrollments;
+    }
+
+    public void setEnrollments(List<Enrollment> enrollments) {
+        this.enrollments = enrollments;
+    }
 }

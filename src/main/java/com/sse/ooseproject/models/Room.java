@@ -14,7 +14,7 @@ public class Room {
 
     private String number;
     private int seats;
-    private boolean isAuditorium;
+    private boolean is_auditorium;
 
     @ManyToOne
     @JoinColumn(name = "building_id")
@@ -23,4 +23,51 @@ public class Room {
     @OneToMany(mappedBy = "room")
     private List<RoomOccupancy> occupancies;
 
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
+    }
+
+    public int getSeats() {
+        return seats;
+    }
+
+    public void setSeats(int seats) {
+        this.seats = seats;
+    }
+
+    public boolean is_auditorium() {
+        return is_auditorium;
+    }
+
+    public void set_auditorium(boolean auditorium) {
+        is_auditorium = auditorium;
+    }
+
+    public Building getBuilding() {
+        return building;
+    }
+
+    public void setBuilding(Building building) {
+        this.building = building;
+    }
+
+    public List<RoomOccupancy> getOccupancies() {
+        return occupancies;
+    }
+
+    public void setOccupancies(List<RoomOccupancy> occupancies) {
+        this.occupancies = occupancies;
+    }
 }
