@@ -1,12 +1,10 @@
 package com.sse.ooseproject.repositories;
 
 import com.sse.ooseproject.models.Student;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.repository.Repository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
-public interface StudentRepository extends Repository<Student, Long> {
+@Repository
+public interface StudentRepository extends JpaRepository<Student, Long> {
     Student findByMatNr(int matNr);
-    List<Student> findAll(Sort sort);
 }

@@ -7,12 +7,10 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @Controller
 public class StudentController {
-
     private final StudentRepository studentRepository;
 
     @Autowired
