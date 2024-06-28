@@ -1,6 +1,8 @@
 package com.sse.ooseproject.models;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -9,6 +11,9 @@ public class Employee extends Person{
     //Properties
     private int staffNr;
     private boolean isProfessor;
+    @ManyToOne
+    @JoinColumn(name="university_id")
+    private University university;
 
     //No-argument constructor
     public Employee(){
@@ -16,10 +21,11 @@ public class Employee extends Person{
     }
 
     //Constructor
-    public Employee(String firstName, String lastName, String emailAddress, int staffNr, boolean isProfessor) {
-        super(firstName, lastName, emailAddress);
+    public Employee(String firstName, String lastName, String email, int staffNr, boolean isProfessor, University university) {
+        super(firstName, lastName, email);
         this.staffNr = staffNr;
         this.isProfessor = isProfessor;
+        this.university = university;
     }
 
     //Methods
@@ -35,5 +41,12 @@ public class Employee extends Person{
     }
     public void setIsProfessor(boolean isProfessor) {
         this.isProfessor = isProfessor;
+    }
+
+    public University getUniversity() {
+        return university;
+    }
+    public void setUniversity(University university) {
+        this.university = university;
     }
 }
