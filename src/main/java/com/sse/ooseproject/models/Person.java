@@ -1,23 +1,56 @@
 package com.sse.ooseproject.models;
 
-import jakarta.persistence.*;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.GenerationType;
 
-public class Person {
-    // Entities or MappedSuperclass models in Spring require an id. The @GeneratedValue annotation makes sure
-    // that the id is automatically increased when inserting new objects into the database.
+@MappedSuperclass
+public abstract class Person {
+    //Properties
     @jakarta.persistence.Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
-    // TODO add more attributes.
+    private String firstName;
+    private String lastName;
+    private String email;
 
     /**
      * A Person object. Spring requires an empty constructor. Do not change this but rather implement another
      * plausible constructor.
      */
+    //No-argument constructor
     public Person() {}
 
-    // TODO add a plausible constructor.
+    //Constructor for subclasses
+    protected Person(String firstName, String lastName, String email) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+    }
 
-    // TODO add getter and setter methods.
+    //Methods
+    public long getId() {
+        return this.id;
+    }
+
+    public String getFirstName() {
+        return this.firstName;
+    }
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return this.lastName;
+    }
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getEmail() {
+        return this.email;
+    }
+    public void setEmail(String email) {
+        this.email = email;
+    }
 }
