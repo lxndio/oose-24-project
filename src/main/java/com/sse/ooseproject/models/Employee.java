@@ -1,6 +1,8 @@
 package com.sse.ooseproject.models;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -8,6 +10,17 @@ import jakarta.persistence.Table;
 public class Employee extends Person {
     private int staffNr;
     private int isProfessor;
+    @ManyToOne
+    @JoinColumn(name = "university_id")
+    private University university;
+
+    public University getUniversity() {
+        return university;
+    }
+
+    public void setUniversity(University university) {
+        this.university = university;
+    }
 
     public int getStaffNr() {
         return staffNr;

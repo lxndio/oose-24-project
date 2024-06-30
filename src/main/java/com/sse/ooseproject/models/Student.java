@@ -7,6 +7,17 @@ import jakarta.persistence.*;
 public class Student extends Person{
     private int matNr;
     private String studySubject;
+    @ManyToOne
+    @JoinColumn(name = "university_id")
+    private University university;
+
+    public University getUniversity() {
+        return university;
+    }
+
+    public void setUniversity(University university) {
+        this.university = university;
+    }
 
     public int getMatNr() {
         return matNr;

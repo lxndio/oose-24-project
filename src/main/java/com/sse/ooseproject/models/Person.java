@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 public class Person {
     // Entities or MappedSuperclass models in Spring require an id. The @GeneratedValue annotation makes sure
     // that the id is automatically increased when inserting new objects into the database.
-    @jakarta.persistence.Id
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
