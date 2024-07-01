@@ -15,6 +15,14 @@ public class Enrollment {
     @JoinColumn(name = "student_id")
     private Student student;
 
+    public String getSemester() {
+        return semester;
+    }
+
+    public void setSemester(String semester) {
+        this.semester = semester;
+    }
+
     public Student getStudent() {
         return student;
     }

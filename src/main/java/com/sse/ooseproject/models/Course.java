@@ -20,6 +20,38 @@ public class Course {
     @OneToMany(mappedBy = "course")
     private List<TeachingShift> teachingShifts;
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public List<Enrollment> getEnrollments() {
+        return enrollments;
+    }
+
+    public void setEnrollments(List<Enrollment> enrollments) {
+        this.enrollments = enrollments;
+    }
+
+    public List<RoomOccupancy> getRoomOccupancies() {
+        return roomOccupancies;
+    }
+
+    public void setRoomOccupancies(List<RoomOccupancy> roomOccupancies) {
+        this.roomOccupancies = roomOccupancies;
+    }
+
+    public List<TeachingShift> getTeachingShifts() {
+        return teachingShifts;
+    }
+
+    public void setTeachingShifts(List<TeachingShift> teachingShifts) {
+        this.teachingShifts = teachingShifts;
+    }
+
     public long getId() {
         return id;
     }
