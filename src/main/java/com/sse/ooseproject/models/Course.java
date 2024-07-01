@@ -12,9 +12,13 @@ public class Course {
     @Id
     @Column(name = "id", nullable = false)
     private long id;
-
+    private String name;
+    @OneToMany(mappedBy = "course")
+    private List<Enrollment> enrollments;
     @OneToMany(mappedBy = "course")
     private List<RoomOccupancy> roomOccupancies;
+    @OneToMany(mappedBy = "course")
+    private List<TeachingShift> teachingShifts;
 
     public long getId() {
         return id;
