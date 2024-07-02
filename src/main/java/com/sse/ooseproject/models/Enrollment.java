@@ -4,13 +4,12 @@ import jakarta.persistence.*;
 
 @Entity
 public class Enrollment {
-    @Id
-    @Column(name = "id", nullable = false)
-    private long id;
     private String semester;
+    @Id
     @ManyToOne
     @JoinColumn(name = "course_id")
     private Course course;
+    @Id
     @ManyToOne
     @JoinColumn(name = "student_id")
     private Student student;
@@ -39,11 +38,4 @@ public class Enrollment {
         this.course = course;
     }
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
 }

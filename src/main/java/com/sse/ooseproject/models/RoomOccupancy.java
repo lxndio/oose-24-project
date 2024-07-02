@@ -6,13 +6,12 @@ import java.time.LocalDateTime;
 
 @Entity
 public class RoomOccupancy {
-    @Id
-    @Column(name = "id", nullable = false)
-    private long id;
 
+    @Id
     @ManyToOne
     @JoinColumn(name = "course_id")
     private Course course;
+    @Id
     @ManyToOne
     @JoinColumn(name = "room_id")
     private Room room;
@@ -42,11 +41,4 @@ public class RoomOccupancy {
         this.occupancyTime = occupancyTime;
     }
 
-    public long getId() {
-        return id;
-    }
-
-    public void setId(long id) {
-        this.id = id;
-    }
 }
