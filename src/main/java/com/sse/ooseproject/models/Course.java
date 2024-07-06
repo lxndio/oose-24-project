@@ -1,9 +1,6 @@
 package com.sse.ooseproject.models;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 
 import java.util.List;
 
@@ -19,6 +16,17 @@ public class Course {
     private List<RoomOccupancy> roomOccupancies;
     @OneToMany(mappedBy = "course")
     private List<TeachingShift> teachingShifts;
+    @ManyToOne
+    @JoinColumn(name = "chair_id")
+    private Chair chair;
+
+    public Chair getChair() {
+        return chair;
+    }
+
+    public void setChair(Chair chair) {
+        this.chair = chair;
+    }
 
     public String getName() {
         return name;

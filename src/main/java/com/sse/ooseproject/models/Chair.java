@@ -1,9 +1,8 @@
 package com.sse.ooseproject.models;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
+
+import java.util.List;
 
 @Entity
 public class Chair extends OrganizationalUnit {
@@ -16,6 +15,9 @@ public class Chair extends OrganizationalUnit {
     @OneToOne
     @JoinColumn(name = "building_id")
     private Building building;
+
+    @OneToMany(mappedBy = "chair")
+    private List<Course> courses;
 
     public Employee getOwner() {
         return owner;
