@@ -48,8 +48,6 @@ public class CourseController {
         if(!sort_asc && Objects.equals(sort_by, "chair")) {
             coursesSorted = courseRepository.findByOrderByChairDesc();
         }
-        System.out.println("Courses");
-        System.out.println(coursesSorted);
         coursesSorted.stream().filter(course -> Objects.equals(course.getName(), "Abstract Algebra")).forEach(course -> System.out.println("" + course.getChair() + course.getName() + course.getChair().getId()));
 
         model.addAttribute("courses", coursesSorted);

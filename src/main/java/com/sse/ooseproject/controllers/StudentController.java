@@ -1,9 +1,11 @@
 package com.sse.ooseproject.controllers;
 
+import com.sse.ooseproject.exceptions.StudentValidateException;
 import com.sse.ooseproject.models.Institute;
 import com.sse.ooseproject.models.Student;
 import com.sse.ooseproject.repositories.InstituteRepository;
 import com.sse.ooseproject.repositories.StudentRepository;
+import com.sse.ooseproject.validation.StudentValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -80,12 +82,22 @@ public class StudentController {
     @PostMapping("/student/new")
     public String newStudent(Model model, @ModelAttribute("student")Student student) {
 
+        StudentValidator studentValidator = new StudentValidator(studentRepository, instituteRepository);
+        boolean isValid;
+        String message = "The creation of the new student was successful.";
+        try {
+            isValid = studentValidator.validateStudent(student);
+        } catch (StudentValidateException sve) {
+            isValid = false;
+            message = sve.getMessage();
+        }
+        String messageType = isValid ? "success" : "error";
 
         model.addAttribute("student", new Student());
         model.addAttribute("page_type", "edit");
         model.addAttribute("study_subjects", getStudySubjects());
-        model.addAttribute("message_type", "success");
-        model.addAttribute("message", "Was successful");
+        model.addAttribute("message_type", messageType);
+        model.addAttribute("message", message);
 
         return "edit_student";
     }
