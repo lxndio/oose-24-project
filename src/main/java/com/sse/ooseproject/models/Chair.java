@@ -6,6 +6,10 @@ import java.util.List;
 
 @Entity
 public class Chair extends OrganizationalUnit {
+    @Id
+    @Column(name = "id", nullable = false)
+    private long id;
+
     @ManyToOne
     @JoinColumn(name = "institute_id")
     private Institute institute;
@@ -18,6 +22,14 @@ public class Chair extends OrganizationalUnit {
 
     @OneToMany(mappedBy = "chair")
     private List<Course> courses;
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 
     public Employee getOwner() {
         return owner;
