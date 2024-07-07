@@ -1,6 +1,8 @@
 package com.sse.ooseproject.controllers;
 
+import com.sse.ooseproject.models.Institute;
 import com.sse.ooseproject.models.Student;
+import com.sse.ooseproject.repositories.InstituteRepository;
 import com.sse.ooseproject.repositories.StudentRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -13,11 +15,13 @@ import java.util.*;
 public class StudentController {
 
     private final StudentRepository studentRepository;
+    private final InstituteRepository instituteRepository;
 
     @Autowired
-    public StudentController(StudentRepository studentRepository) {
+    public StudentController(StudentRepository studentRepository, InstituteRepository instituteRepository) {
 
         this.studentRepository = studentRepository;
+        this.instituteRepository = instituteRepository;
     }
 
     @GetMapping("/students")
@@ -56,5 +60,33 @@ public class StudentController {
 
         // Returning the name of a view (found in resources/templates) as a string lets this endpoint return that view.
         return "students";
+    }
+
+    @GetMapping("/student/new")
+    public String newStudent(Model model) {
+        model.addAttribute("student", new Student());
+        model.addAttribute("page_type", "new");
+        model.addAttribute("study_subjects", getStudySubjects());
+        return "edit_student";
+    }
+
+    private List<String> getStudySubjects() {
+        List<Institute> institutes = instituteRepository.findAllByUniversityId(1);
+        List<String> study_subject = new ArrayList<>();
+        institutes.forEach(i -> study_subject.add(i.getProvidesStudySubject()));
+        return study_subject;
+    }
+
+    @PostMapping("/student/new")
+    public String newStudent(Model model, @ModelAttribute("student")Student student) {
+
+
+        model.addAttribute("student", new Student());
+        model.addAttribute("page_type", "edit");
+        model.addAttribute("study_subjects", getStudySubjects());
+        model.addAttribute("message_type", "success");
+        model.addAttribute("message", "Was successful");
+
+        return "edit_student";
     }
 }

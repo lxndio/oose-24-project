@@ -15,7 +15,16 @@ public class Institute extends OrganizationalUnit {
 
     @OneToMany(mappedBy = "institute")
     private List<Chair> chairs;
+    private int universityId;
     private String providesStudySubject;
+
+    public String getProvidesStudySubject() {
+        return providesStudySubject;
+    }
+
+    public void setProvidesStudySubject(String providesStudySubject) {
+        this.providesStudySubject = providesStudySubject;
+    }
 
     public long getId() {
         return id;
