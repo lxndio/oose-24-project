@@ -92,6 +92,9 @@ public class StudentController {
             message = sve.getMessage();
         }
         String messageType = isValid ? "success" : "error";
+        if(isValid) {
+            studentRepository.save(student);
+        }
 
         model.addAttribute("student", new Student());
         model.addAttribute("page_type", "edit");
