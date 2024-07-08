@@ -97,7 +97,7 @@ public class StudentController {
         }
 
         model.addAttribute("student", new Student());
-        model.addAttribute("page_type", "edit");
+        model.addAttribute("page_type", "new");
         model.addAttribute("study_subjects", getStudySubjects());
         model.addAttribute("message_type", messageType);
         model.addAttribute("message", message);
