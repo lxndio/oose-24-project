@@ -104,4 +104,38 @@ public class StudentController {
 
         return "edit_student";
     }
+
+    @GetMapping("/student/edit")
+    public String editStudent(Model model, @ModelAttribute("student")Student student) {
+        model.addAttribute("student", studentRepository.findStudentById(student.getId()));
+        model.addAttribute("page_type", "edit");
+        model.addAttribute("study_subjects", getStudySubjects());
+        return "edit_student";
+    }
+
+    @PostMapping("/student/edit")
+    public String editPostStudent(Model model, @ModelAttribute("student")Student student) {
+
+        StudentValidator studentValidator = new StudentValidator(studentRepository, instituteRepository);
+        boolean isValid;
+        String message = "The student was updated successful.";
+        try {
+            isValid = studentValidator.validateStudent(student);
+        } catch (StudentValidateException sve) {
+            isValid = false;
+            message = sve.getMessage();
+        }
+        String messageType = isValid ? "success" : "error";
+        if(isValid) {
+            studentRepository.save(student);
+        }
+
+        model.addAttribute("student", new Student());
+        model.addAttribute("page_type", "edit");
+        model.addAttribute("study_subjects", getStudySubjects());
+        model.addAttribute("message_type", messageType);
+        model.addAttribute("message", message);
+
+        return "edit_student";
+    }
 }
