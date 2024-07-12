@@ -4,12 +4,8 @@ import jakarta.persistence.*;
 
 @Entity
 public class Enrollment {
-    @Id
-    @Column(name = "id", nullable = false)
-    private long id;
-
-    @Embedded
-    private EnrollmentId enrollmentId;
+    @EmbeddedId
+    private EnrollmentId id;
     private String semester;
 
     @ManyToOne
@@ -20,20 +16,12 @@ public class Enrollment {
     @MapsId("student_id")
     private Student student;
 
-    public long getId() {
+    public EnrollmentId getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(EnrollmentId id) {
         this.id = id;
-    }
-
-    public EnrollmentId getEnrollmentId() {
-        return enrollmentId;
-    }
-
-    public void setEnrollmentId(EnrollmentId enrollmentId) {
-        this.enrollmentId = enrollmentId;
     }
 
     public String getSemester() {
@@ -44,14 +32,6 @@ public class Enrollment {
         this.semester = semester;
     }
 
-    public Student getStudent() {
-        return student;
-    }
-
-    public void setStudent(Student student) {
-        this.student = student;
-    }
-
     public Course getCourse() {
         return course;
     }
@@ -60,4 +40,11 @@ public class Enrollment {
         this.course = course;
     }
 
+    public Student getStudent() {
+        return student;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
+    }
 }

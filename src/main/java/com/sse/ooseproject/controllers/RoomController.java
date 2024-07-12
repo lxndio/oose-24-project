@@ -38,10 +38,11 @@ public class RoomController {
             roomsSorted = roomRepository.findByOrderBySeatsAsc();
         }
         if(sort_asc && Objects.equals(sort_by, "isAuditorium")) {
-            //roomsSorted = roomRepository.findByOrderByAuditoriumAsc();
+            //roomsSorted = roomRepository.findAll(Sort.by(Sort.Direction.ASC), "isAuditorium");
+            roomsSorted = roomRepository.findByOrderByIsAuditoriumAsc();
         }
-        if(sort_asc && Objects.equals(sort_by, "buildingId")) {
-            roomsSorted = roomRepository.findByOrderByBuildingIdAsc();
+        if(sort_asc && Objects.equals(sort_by, "building")) {
+            roomsSorted = roomRepository.findByOrderByBuildingAsc();
         }
         if(!sort_asc && Objects.equals(sort_by, "id")) {
             roomsSorted = roomRepository.findByOrderByIdDesc();
@@ -53,10 +54,10 @@ public class RoomController {
             roomsSorted = roomRepository.findByOrderBySeatsDesc();
         }
         if(!sort_asc && Objects.equals(sort_by, "isAuditorium")) {
-            //roomsSorted = roomRepository.findByOrderByAuditoriumDesc();
+            roomsSorted = roomRepository.findByOrderByIsAuditoriumDesc();
         }
-        if(!sort_asc && Objects.equals(sort_by, "buildingId")) {
-            roomsSorted = roomRepository.findByOrderByBuildingIdDesc();
+        if(!sort_asc && Objects.equals(sort_by, "building")) {
+            roomsSorted = roomRepository.findByOrderByBuildingDesc();
         }
 
         model.addAttribute("rooms", roomsSorted);

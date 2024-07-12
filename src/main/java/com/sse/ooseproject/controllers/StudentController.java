@@ -1,8 +1,9 @@
 package com.sse.ooseproject.controllers;
 
 import com.sse.ooseproject.exceptions.StudentValidateException;
-import com.sse.ooseproject.models.Institute;
-import com.sse.ooseproject.models.Student;
+import com.sse.ooseproject.models.*;
+import com.sse.ooseproject.repositories.CourseRepository;
+import com.sse.ooseproject.repositories.EnrollmentRepository;
 import com.sse.ooseproject.repositories.InstituteRepository;
 import com.sse.ooseproject.repositories.StudentRepository;
 import com.sse.ooseproject.validation.StudentValidator;
@@ -18,12 +19,16 @@ public class StudentController {
 
     private final StudentRepository studentRepository;
     private final InstituteRepository instituteRepository;
+    private final EnrollmentRepository enrollmentRepository;
+    private final CourseRepository courseRepository;
 
     @Autowired
-    public StudentController(StudentRepository studentRepository, InstituteRepository instituteRepository) {
+    public StudentController(StudentRepository studentRepository, InstituteRepository instituteRepository, EnrollmentRepository enrollmentRepository, CourseRepository courseRepository) {
 
         this.studentRepository = studentRepository;
         this.instituteRepository = instituteRepository;
+        this.enrollmentRepository = enrollmentRepository;
+        this.courseRepository = courseRepository;
     }
 
     @GetMapping("/students")
@@ -31,28 +36,28 @@ public class StudentController {
                            @RequestParam(value = "sort_asc", defaultValue = "true") boolean sort_asc) {
 
         List<Student> studentsSorted = Collections.emptyList();
-        if(sort_asc && Objects.equals(sort_by, "matNr")) {
+        if (sort_asc && Objects.equals(sort_by, "matNr")) {
             studentsSorted = studentRepository.findByOrderByMatNrAsc();
         }
-        if(sort_asc && Objects.equals(sort_by, "lastName")) {
+        if (sort_asc && Objects.equals(sort_by, "lastName")) {
             studentsSorted = studentRepository.findByOrderByLastNameAsc();
         }
-        if(sort_asc && Objects.equals(sort_by, "firstName")) {
+        if (sort_asc && Objects.equals(sort_by, "firstName")) {
             studentsSorted = studentRepository.findByOrderByFirstNameAsc();
         }
-        if(sort_asc && Objects.equals(sort_by, "studySubject")) {
+        if (sort_asc && Objects.equals(sort_by, "studySubject")) {
             studentsSorted = studentRepository.findByOrderByStudySubjectAsc();
         }
-        if(!sort_asc && Objects.equals(sort_by, "matNr")) {
+        if (!sort_asc && Objects.equals(sort_by, "matNr")) {
             studentsSorted = studentRepository.findByOrderByMatNrDesc();
         }
-        if(!sort_asc && Objects.equals(sort_by, "lastName")) {
+        if (!sort_asc && Objects.equals(sort_by, "lastName")) {
             studentsSorted = studentRepository.findByOrderByLastNameDesc();
         }
-        if(!sort_asc && Objects.equals(sort_by, "firstName")) {
+        if (!sort_asc && Objects.equals(sort_by, "firstName")) {
             studentsSorted = studentRepository.findByOrderByFirstNameDesc();
         }
-        if(!sort_asc && Objects.equals(sort_by, "studySubject")) {
+        if (!sort_asc && Objects.equals(sort_by, "studySubject")) {
             studentsSorted = studentRepository.findByOrderByStudySubjectDesc();
         }
 
@@ -80,7 +85,7 @@ public class StudentController {
     }
 
     @PostMapping("/student/new")
-    public String newStudent(Model model, @ModelAttribute("student")Student student) {
+    public String newStudent(Model model, @ModelAttribute("student") Student student) {
 
         StudentValidator studentValidator = new StudentValidator(studentRepository, instituteRepository);
         boolean isValid;
@@ -92,7 +97,7 @@ public class StudentController {
             message = sve.getMessage();
         }
         String messageType = isValid ? "success" : "error";
-        if(isValid) {
+        if (isValid) {
             studentRepository.save(student);
         }
 
@@ -106,7 +111,7 @@ public class StudentController {
     }
 
     @GetMapping("/student/edit")
-    public String editStudent(Model model, @ModelAttribute("student")Student student) {
+    public String editStudent(Model model, @ModelAttribute("student") Student student) {
         model.addAttribute("student", studentRepository.findStudentById(student.getId()));
         model.addAttribute("page_type", "edit");
         model.addAttribute("study_subjects", getStudySubjects());
@@ -114,7 +119,7 @@ public class StudentController {
     }
 
     @PostMapping("/student/edit")
-    public String editPostStudent(Model model, @ModelAttribute("student")Student student) {
+    public String editPostStudent(Model model, @ModelAttribute("student") Student student) {
 
         StudentValidator studentValidator = new StudentValidator(studentRepository, instituteRepository);
         boolean isValid;
@@ -126,7 +131,7 @@ public class StudentController {
             message = sve.getMessage();
         }
         String messageType = isValid ? "success" : "error";
-        if(isValid) {
+        if (isValid) {
             studentRepository.save(student);
         }
 
@@ -137,5 +142,24 @@ public class StudentController {
         model.addAttribute("message", message);
 
         return "edit_student";
+    }
+
+    @GetMapping("/student/enroll")
+    public String addEnrollment(Model model, @ModelAttribute("id") long id, @ModelAttribute("semester") String semester) {
+
+        Student student = studentRepository.findStudentById(id);
+        model.addAttribute("student", student);
+        model.addAttribute("enrollments", enrollmentRepository.findAllBySemester(semester));
+        model.addAttribute("semester", semester);
+
+        //find all enrollments to the ID
+        List<Enrollment> enrollments = enrollmentRepository.findAllByStudent(student);
+        List<Course> courses = new ArrayList<>();
+        //get for every ID the fitting course
+        //enrollments.forEach(e -> courses.add(courseRepository.findById(e.getId().getCourse_id())));
+
+        model.addAttribute("courses", courses);
+
+        return "enrollment";
     }
 }
