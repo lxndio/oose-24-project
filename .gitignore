@@ -53,3 +53,5 @@ atlassian-ide-plugin.xml
 cached-antora-playbook.yml
 
 .DS_Store
+
+/src/main/resources/database.sqlite3
